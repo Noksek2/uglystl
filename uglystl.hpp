@@ -1,3 +1,6 @@
+// STL FUCK YOU
+//static cast fuck you
+
 #pragma once
 #include <stdio.h>
 #include <stdint.h>
@@ -15,9 +18,58 @@
 
 namespace uglystl {
 	typedef uint32_t mysize;
-	static uint32_t make_hash(const char* key, uint32_t length) {
-		if (length == 0u) length = strlen(key);
+
+	class Random {
+		uint64_t m_state;
+	public:
+		Random(uint64_t seed = 12345u) :m_state(seed) {}
+		/*unsigned int Next() {
+			unsigned int x = m_state;
+			x ^= x << 13;
+			x ^= x >> 17;
+			x ^= x << 5;
+			return m_state = x;
+		}*/
+		TMP T Range(const T min, const T max) {
+			if (min > max) return min;
+			return (T)(Next() % (max - min + 1)) + min;
+		}
+
+		uint64_t Next() {
+			uint64_t z = (m_state += 0x9E3779B97F4A7C15ULL);
+			z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
+			z = (z ^ (z >> 27)) * 0x94D049BB133111EBULL;
+			return z ^ (z >> 31);
+		}
+	};
+
+	template<typename T>
+	static uint32_t make_hash(T key, uint32_t length) {
+		if (length == 0u) length = sizeof(T);
+		const char* keys = (const char*)&key;
 		uint32_t hash = 2166136261u; // FNV offset basis
+		for (uint32_t i = 0; i < length; i++) {
+			hash ^= (uint8_t)keys[i];
+			hash *= 16777619; // FNV prime
+		}
+		return hash;
+	}
+
+	template<>
+	static uint32_t make_hash(const char* key, uint32_t length) {
+		if (length == 0u) length = strlen(key) - 1;
+		uint32_t hash = 2166136261u; // FNV offset basis
+		for (uint32_t i = 0; i < length; i++) {
+			hash ^= (uint8_t)key[i];
+			hash *= 16777619; // FNV prime
+		}
+		return hash;
+	}
+	template<>
+	static uint32_t make_hash(const wchar_t* key, uint32_t length) {
+		if (length == 0u) length = wcslen(key);
+		uint32_t hash = 2166136261u; // FNV offset basis
+
 		for (uint32_t i = 0; i < length; i++) {
 			hash ^= (uint8_t)key[i];
 			hash *= 16777619; // FNV prime
@@ -129,11 +181,12 @@ namespace uglystl {
 			Iter& operator++(int) { idx++; return *this; }
 			Iter& operator--() { idx--; return *this; }
 		};
-		const Iter<T>& ToIter() { return Iter<T>(*this); }
+		const Iter<T>& ToIter() { return (*this); }
 	};
 	
 	TMPKV struct HashPair {
 		K key;
+		uint32_t hash;
 		V value;
 	};
 	TMPKV class HashMap {
@@ -155,10 +208,10 @@ namespace uglystl {
 				m_map = nullptr;
 			}
 		}
-		const Iter& ToIter() {
+		 Iter ToIter() {
 			return *this;
 		}
-
+		Iter Fuck() { return this; }
 		class Iter {
 		
 			HashMap& m_map_ref;
