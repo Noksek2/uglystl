@@ -1,7 +1,7 @@
 # uglystl
 Test STL For Me or Someone weirdo.
 
-I built this because I hate the complexity of C++ move semantics, template errors, and bad compatibility with C.
+I built this because I hate the complexity of RAII of C++, template errors, bad compatibility with C, and While implementing STL, I wanted to experience the strangeness of C++.
 
 This is ugly, and it's not a modern standards. But easy to use.
 
@@ -11,7 +11,7 @@ This is ugly, and it's not a modern standards. But easy to use.
 
 believe or not, ai code 0%.
 
-evidence : [Link](https://www.youtube.com/watch?v=6wtymP7j0SE)
+some evidence : [Link](https://www.youtube.com/watch?v=6wtymP7j0SE)
 
 ## code
 ```cpp
