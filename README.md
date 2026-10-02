@@ -5,10 +5,11 @@ I built this because I hate the complexity of C++ move semantics, template error
 
 This is ugly, and it's not a modern standards. But easy to use.
 
-## ai dependency
+## ai dependency 
 - uglystl.hpp : <20% (idea)
 - uglyjson.hpp : <10% (`YourJsonData` - `std::variant`)
 
+believe or not, ai code 0%.
 
 ## code
 ```cpp
