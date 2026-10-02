@@ -237,23 +237,23 @@ namespace nok {
 		}
 		void Free() {
 			if (data) {
-				// 1. T°¡ ¼Ò¸êÀÚ°¡ ÇÊ¿äÇÑ ³ğ(Vec, String µî)ÀÎÁö ÄÄÆÄÀÏ Å¸ÀÓ¿¡ Ã¼Å©
+				// 1. Tê°€ ì†Œë©¸ìê°€ í•„ìš”í•œ ë†ˆ(Vec, String ë“±)ì¸ì§€ ì»´íŒŒì¼ íƒ€ì„ì— ì²´í¬
 				if constexpr (std::is_trivially_destructible_v<T>) {
 					for (size_t i = 0; i < len; i++) {
-						data[i].~T(); // TÀÇ ¼Ò¸êÀÚ¸¦ ¸í½ÃÀûÀ¸·Î È£Ãâ
+						data[i].~T(); // Tì˜ ì†Œë©¸ìë¥¼ ëª…ì‹œì ìœ¼ë¡œ í˜¸ì¶œ
 					}
 				}
 				if constexpr (is_vec<std::decay_t<T>>::value) {
 					for (size_t i = 0; i < len; i++) {
-						data[i].Free(); // TÀÇ ¼Ò¸êÀÚ¸¦ ¸í½ÃÀûÀ¸·Î È£Ãâ
+						data[i].Free(); // Tì˜ ì†Œë©¸ìë¥¼ ëª…ì‹œì ìœ¼ë¡œ í˜¸ì¶œ
 					}
-					// T°¡ Vec<int>µç Vec<char>µç 'Vec'ÀÌ¸é ½ÇÇà
+					// Tê°€ Vec<int>ë“  Vec<char>ë“  'Vec'ì´ë©´ ì‹¤í–‰
 				}
 				puts("Free");
-				// 2. ½ÇÁ¦ ¸Ş¸ğ¸® ÇØÁ¦ (C ½ºÅ¸ÀÏ)
+				// 2. ì‹¤ì œ ë©”ëª¨ë¦¬ í•´ì œ (C ìŠ¤íƒ€ì¼)
 				nok::Memory::Free(data);
 
-				// 3. ´Ù½Ã ¾µ ¼ö ÀÖ°Ô ÃÊ±âÈ­
+				// 3. ë‹¤ì‹œ ì“¸ ìˆ˜ ìˆê²Œ ì´ˆê¸°í™”
 				this->Init();
 			}
 		}
@@ -293,7 +293,7 @@ int main() {
 	//SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 /*
-auto v2 =v1 º¹»ç »ı¼ºÀÚ
-v2 = v1 º¹»ç ´ëÀÔ ¿¬»êÀÚ
-v2 = Vec::New(); ÀÌµ¿ »ı¼ºÀÚ
+auto v2 =v1 ë³µì‚¬ ìƒì„±ì
+v2 = v1 ë³µì‚¬ ëŒ€ì… ì—°ì‚°ì
+v2 = Vec::New(); ì´ë™ ìƒì„±ì
 */
