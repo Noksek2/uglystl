@@ -11,6 +11,8 @@ This is ugly, and it's not a modern standards. But easy to use.
 
 believe or not, ai code 0%.
 
+evidence : [Link](https://www.youtube.com/watch?v=6wtymP7j0SE)
+
 ## code
 ```cpp
 namespace ug;
